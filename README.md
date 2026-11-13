@@ -54,6 +54,7 @@ Ouvrez http://localhost:3000.
 - Réconciliation au retour client (`/bibliotheque?transaction=...`) : filet de sécurité idempotent si le webhook est perdu.
 - Téléchargement sécurisé `/api/download/[itemId]` : droit vérifié + URL signée (bucket privé, 5 min).
 - Tableau de bord administrateur (statistiques produits / clients / ventes / CA).
+- Gestion des documents : création, modification, publication/dépublication, suppression (dépublication si historique de ventes) et upload du fichier vers le bucket privé `documents` (25 Mo max).
 
 ## Tester le paiement (sandbox CinetPay)
 
@@ -72,8 +73,7 @@ Aucun paiement réel ne doit être encaissé avant validation complète du mode 
 ## Ce qui reste à faire
 
 - Tests sandbox CinetPay de bout en bout (paiement réel en mode test).
-- Formulaire d'administration des produits (création / modification / publication).
-- Envoi des fichiers réels dans le bucket `documents` (chemins renseignés dans `products.file_path`).
+- Liste détaillée des clients et export des commandes.
 - Emails transactionnels (confirmation de commande).
 - Domaine, HTTPS et mise en production.
 
