@@ -21,7 +21,7 @@ Boutique en ligne à vendeur unique de documents techniques (métrologie, qualit
 | RF-06 | Paiement CinetPay : commande serveur, initialisation, webhook | Codé, à tester en sandbox |
 | RF-07 | Bibliothèque : documents des commandes payées | Livré (nécessite paiements réels) |
 | RF-08 | Téléchargement sécurisé : droit vérifié, URL signée 5 min | Codé, à tester avec fichiers réels |
-| RF-09 | Administration : statistiques (produits, clients, ventes, CA) | Livré |
+| RF-09 | Administration : statistiques (produits, clients, ventes, CA) + liste des clients | Livré |
 | RF-10 | Administration : CRUD produits (création, modification, publication, suppression, upload fichier) | Livré |
 | RF-11 | Assistance : contact email + WhatsApp | Livré (footer) |
 

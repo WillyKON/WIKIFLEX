@@ -147,9 +147,14 @@ export default async function AdministrationPage() {
 
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 32, marginBottom: 12 }}>
         <h2 style={{ margin: 0 }}>Documents</h2>
-        <Link href="/administration/produits/nouveau" className="btn btn-primary btn-small">
-          + Nouveau document
-        </Link>
+        <div style={{ display: "flex", gap: 10 }}>
+          <Link href="/administration/clients" className="btn btn-ghost btn-small">
+            Clients
+          </Link>
+          <Link href="/administration/produits/nouveau" className="btn btn-primary btn-small">
+            + Nouveau document
+          </Link>
+        </div>
       </div>
 
       {productList.length === 0 ? (
