@@ -51,8 +51,23 @@ Ouvrez http://localhost:3000.
 - Bibliothèque personnelle (documents des commandes payées).
 - Endpoint paiement `/api/pay` : prix recalculés côté serveur, commande en base, initialisation CinetPay.
 - Webhook `/api/webhooks/cinetpay` : re-vérification du statut auprès de CinetPay, anti-doublon, contrôle du montant.
+- Réconciliation au retour client (`/bibliotheque?transaction=...`) : filet de sécurité idempotent si le webhook est perdu.
 - Téléchargement sécurisé `/api/download/[itemId]` : droit vérifié + URL signée (bucket privé, 5 min).
 - Tableau de bord administrateur (statistiques produits / clients / ventes / CA).
+
+## Tester le paiement (sandbox CinetPay)
+
+1. Dans le back-office CinetPay, récupérez votre **site_id** et **apikey** du mode TEST et renseignez-les dans `.env.local`.
+2. Démarrez l'application en ligne (`npm run dev` + un tunnel HTTPS type `ngrok http 3000` pour que CinetPay puisse appeler le webhook), et définissez `NEXT_PUBLIC_APP_URL` sur l'URL publique.
+3. Dans le back-office CinetPay → Paramètres → Notification, renseignez aussi l'URL du webhook : `https://VOTRE-DOMAINE/api/webhooks/cinetpay`.
+4. Ajoutez un document au panier, connectez-vous, cliquez « Payer par Mobile Money » et suivez le flux de paiement de test.
+5. Vérifiez : retour sur `/bibliotheque?transaction=...` avec bandeau de statut, commande `paid` dans Supabase, document téléchargeable.
+
+Le statut est vérifié à deux endroits, de façon idempotente :
+- **Webhook** `POST /api/webhooks/cinetpay` (notification serveur-à-serveur) ;
+- **Retour client** : la page `/bibliotheque?transaction=...` re-vérifie la transaction auprès de CinetPay si la commande est encore `pending` (filet de sécurité si le webhook est perdu).
+
+Aucun paiement réel ne doit être encaissé avant validation complète du mode test.
 
 ## Ce qui reste à faire
 

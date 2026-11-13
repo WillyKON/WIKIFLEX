@@ -29,7 +29,8 @@ Version 0.2 — Phase 2
 4. Client redirigé vers CinetPay (Orange Money, MTN MoMo, Moov, Wave).
 5. CinetPay notifie `POST /api/webhooks/cinetpay` (`cpm_trans_id`).
 6. Serveur : `POST /v2/payment/check` → si `ACCEPTED` et montant égal → commande `paid`.
-7. Client revient sur `/bibliotheque` ; le document apparaît avec bouton de téléchargement.
+7. Client revient sur `/bibliotheque?transaction=MDCI-...` : la page appelle `reconcileOrder()` (`lib/orders.ts`) qui re-vérifie la transaction auprès de CinetPay si la commande est encore `pending`, met à jour le statut de façon idempotente et affiche un bandeau (confirmé / en attente / refusé).
+8. Le document apparaît avec bouton de téléchargement dès que la commande est `paid`.
 
 ## 4. Écrans
 

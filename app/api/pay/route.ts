@@ -131,7 +131,7 @@ export async function POST(request: Request) {
       customerName: profile?.full_name || data.user.email || "Client METRODOC",
       customerEmail: data.user.email ?? "",
       description: `METRODOC CI - ${lines.map((l) => l.product_title).join(", ")}`,
-      returnUrl: `${appUrl}/bibliotheque`,
+      returnUrl: `${appUrl}/bibliotheque?transaction=${transactionId}`,
       notifyUrl: `${appUrl}/api/webhooks/cinetpay`,
     });
 

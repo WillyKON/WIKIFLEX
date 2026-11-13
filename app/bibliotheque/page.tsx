@@ -1,5 +1,6 @@
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 import { formatDateFr } from "@/lib/format";
+import { reconcileOrder } from "@/lib/orders";
 
 export const dynamic = "force-dynamic";
 
@@ -9,7 +10,19 @@ type LibraryItem = {
   purchasedAt: string;
 };
 
-export default async function BibliothequePage() {
+type SearchParams = Promise<Record<string, string | string[] | undefined>>;
+
+export default async function BibliothequePage({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
+  const params = await searchParams;
+  const transactionParam = params.transaction;
+  const transactionId = Array.isArray(transactionParam)
+    ? transactionParam[0]
+    : transactionParam;
+
   if (!isSupabaseConfigured()) {
     return (
       <section className="section container">
@@ -35,6 +48,23 @@ export default async function BibliothequePage() {
         </div>
       </section>
     );
+  }
+
+  let paymentNotice: { kind: "paid" | "pending" | "failed"; text: string } | null = null;
+
+  if (transactionId) {
+    try {
+      const result = await reconcileOrder(transactionId, data.user.id);
+      if (result.status !== "unknown") {
+        paymentNotice = { kind: result.status, text: result.message };
+      }
+    } catch {
+      paymentNotice = {
+        kind: "pending",
+        text:
+          "Paiement en cours de vérification : votre bibliothèque sera mise à jour d'un instant à l'autre.",
+      };
+    }
   }
 
   const { data: orders, error } = await supabase
@@ -64,6 +94,20 @@ export default async function BibliothequePage() {
       <p className="section-sub">
         Vos documents achetés, disponibles en téléchargement illimité.
       </p>
+
+      {paymentNotice && (
+        <div
+          className={
+            paymentNotice.kind === "paid"
+              ? "form-success"
+              : paymentNotice.kind === "failed"
+                ? "form-error"
+                : "notice"
+          }
+        >
+          {paymentNotice.text}
+        </div>
+      )}
 
       {items.length === 0 ? (
         <div className="empty-state">
