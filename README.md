@@ -76,7 +76,7 @@ Aucun paiement réel ne doit être encaissé avant validation complète du mode 
 
 - Tests sandbox CinetPay de bout en bout (paiement réel en mode test).
 - Emails transactionnels (confirmation de commande).
-- Domaine, HTTPS et mise en production.
+- Exécution du guide de mise en production : **[docs/mise-en-production.md](docs/mise-en-production.md)** (Supabase réel, Netlify, domaine, HTTPS, CinetPay production, checklist post-déploiement).
 
 ## Sécurité
 
