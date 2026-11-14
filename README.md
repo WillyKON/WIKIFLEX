@@ -55,6 +55,7 @@ Ouvrez http://localhost:3000.
 - Téléchargement sécurisé `/api/download/[itemId]` : droit vérifié + URL signée (bucket privé, 5 min).
 - Tableau de bord administrateur (statistiques produits / clients / ventes / CA).
 - Liste des clients (`/administration/clients`) : nom, email, date d'inscription, commandes payées, total dépensé.
+- Liste des commandes (`/administration/commandes`) + export CSV (compatible Excel, séparateur `;`, BOM UTF-8).
 - Gestion des documents : création, modification, publication/dépublication, suppression (dépublication si historique de ventes) et upload du fichier vers le bucket privé `documents` (25 Mo max).
 
 ## Tester le paiement (sandbox CinetPay)
@@ -74,7 +75,6 @@ Aucun paiement réel ne doit être encaissé avant validation complète du mode 
 ## Ce qui reste à faire
 
 - Tests sandbox CinetPay de bout en bout (paiement réel en mode test).
-- Export des commandes (CSV).
 - Emails transactionnels (confirmation de commande).
 - Domaine, HTTPS et mise en production.
 

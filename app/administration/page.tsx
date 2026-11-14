@@ -151,6 +151,9 @@ export default async function AdministrationPage() {
           <Link href="/administration/clients" className="btn btn-ghost btn-small">
             Clients
           </Link>
+          <Link href="/administration/commandes" className="btn btn-ghost btn-small">
+            Commandes
+          </Link>
           <Link href="/administration/produits/nouveau" className="btn btn-primary btn-small">
             + Nouveau document
           </Link>
